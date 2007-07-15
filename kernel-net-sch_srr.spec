@@ -52,10 +52,10 @@ EOF
 
 %build
 %build_kernel_modules  -m sch_srr
-# -C .
+
 %install
 rm -rf $RPM_BUILD_ROOT
-%install_kernel_modules -m sch_srr -d kernel/net/sch_srr
+%install_kernel_modules -m sch_srr -d kernel/net/sched
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -68,5 +68,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%dir /lib/modules/%{_kernel_ver}/kernel/net/sch_srr
-/lib/modules/%{_kernel_ver}/kernel/net/sch_srr/sch_srr*.ko*
+/lib/modules/%{_kernel_ver}/kernel/net/sched/sch_srr*.ko*
