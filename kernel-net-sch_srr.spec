@@ -9,7 +9,7 @@
 Summary:	SSR packets scheduler (Simple Round Robin)
 #Summary(pl.UTF-8):
 Name:		kernel%{_alt_kernel}-net-sch_srr
-Version:	0.1
+Version:	0.4
 Release:	%{_rel}@%{_kernel_ver_str}
 License:	GPL
 Group:		Base/Kernel
