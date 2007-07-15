@@ -23,9 +23,6 @@ Requires(post,postun):	/sbin/depmod
 %requires_releq_kernel
 Requires(postun):	%releq_kernel
 %endif
-Provides:	kernel(sch_srr)
-Obsoletes:	linux-net-sch_srr
-Obsoletes:	sch_srr
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
