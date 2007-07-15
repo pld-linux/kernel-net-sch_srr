@@ -55,7 +55,7 @@ EOF
 # -C .
 %install
 rm -rf $RPM_BUILD_ROOT
-%install_kernel_modules -m sch_srr -d kernel/drivers/net
+%install_kernel_modules -m sch_srr -d kernel/net/sch_srr
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -68,4 +68,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-/lib/modules/%{_kernel_ver}/kernel/drivers/net/sch_srr*.ko*
+%dir /lib/modules/%{_kernel_ver}/kernel/net/sch_srr
+/lib/modules/%{_kernel_ver}/kernel/net/sch_srr/sch_srr*.ko*
