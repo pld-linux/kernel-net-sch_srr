@@ -3,6 +3,8 @@
 # - pl desc
 # Conditional build:
 %bcond_without	dist_kernel	# allow non-distribution kernel
+%bcond_without	smp		# don't build SMP module
+%bcond_without	up		# don't build UP module
 %bcond_with	verbose		# verbose build (V=1)
 #
 %define		_rel	1
@@ -16,12 +18,12 @@ Group:		Base/Kernel
 Source0:	http://mordor.strace.net/sched-srr/sch_srr.v%{version}.tgz
 # Source0-md5:	943ed9d1a237336085331d43050d955c
 URL:		http://mordor.strace.net/sched-srr/
-%{?with_dist_kernel:BuildRequires:	kernel%{_alt_kernel}-module-build >= 3:2.6.20.2}
-BuildRequires:	rpmbuild(macros) >= 1.379
+%{?with_dist_kernel:BuildRequires:	kernel%{_alt_kernel}-module-build >= 3:2.6.7}
+BuildRequires:	rpmbuild(macros) >= 1.330
 Requires(post,postun):	/sbin/depmod
 %if %{with dist_kernel}
-%requires_releq_kernel
-Requires(postun):	%releq_kernel
+%requires_releq_kernel_up
+Requires(postun):	%releq_kernel_up
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -41,6 +43,23 @@ from the scheduler, the slots will be processed cyclically, which will
 ensure more or less uniform distribution.
 
 #%description -l pl.UTF-8
+
+%package -n kernel%{_alt_kernel}-smp-net-sch_srr
+Summary:	SSR packets scheduler (Simple Round Robin)
+#Summary(pl):
+Release:	%{_rel}@%{_kernel_ver_str}
+Group:		Base/Kernel
+Requires(post,postun):	/sbin/depmod
+%if %{with dist_kernel}
+%requires_releq_kernel_smp
+Requires(postun):	%releq_kernel_smp
+%endif
+
+%description -n kernel%{_alt_kernel}-smp-net-sch_srr
+This package contains the Linux SMP driver for the SSR packets
+scheduler.
+
+#%description -n kernel%{_alt_kernel}-smp-net-sch_srr -l pl
 
 %prep
 %setup -q -n sch_srr.v%{version}
@@ -66,6 +85,20 @@ rm -rf $RPM_BUILD_ROOT
 %postun
 %depmod %{_kernel_ver}
 
+%post	-n kernel%{_alt_kernel}-smp-net-sch_srr
+%depmod %{_kernel_ver}smp
+
+%postun -n kernel%{_alt_kernel}-smp-net-sch_srr
+%depmod %{_kernel_ver}smp
+
+%if %{with up}
 %files
 %defattr(644,root,root,755)
 /lib/modules/%{_kernel_ver}/kernel/net/sched/sch_srr*.ko*
+%endif
+
+%if %{with smp}
+%files -n kernel%{_alt_kernel}-smp-net-sch_srr
+%defattr(644,root,root,755)
+/lib/modules/%{_kernel_ver}smp/kernel/net/sched/sch_srr*.ko*
+%endif
