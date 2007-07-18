@@ -7,7 +7,7 @@
 #
 %define		_rel	1
 Summary:	SSR packets scheduler (Simple Round Robin)
-#Summary(pl.UTF-8):
+Summary(pl.UTF-8):	Zarządca pakietów SRR (prosty algorytm karuzelowy)
 Name:		kernel%{_alt_kernel}-net-sch_srr
 Version:	0.4
 Release:	%{_rel}@%{_kernel_ver_str}
@@ -40,7 +40,17 @@ address or on destination ip address. With the selection of packet
 from the scheduler, the slots will be processed cyclically, which will
 ensure more or less uniform distribution.
 
-#%description -l pl.UTF-8
+%description -l pl.UTF-8
+Prosty algorytm karuzelowy przeznaczony dla linuksa z jądrem 2.4 lub
+2.6. Jego zadaniem jest zarządzanie dostępnym pasmem pomiędzy
+wszystkich użytkowników. Prosty algorytm karuzelowy (SRR) działa w
+następujący sposób: kolejka wewnętrzna zarządcy jest dzielona na
+wirtualne kolejki (sloty). Każdy slot w każdym cyklu posiada stałą
+liczbę pakietów, którymi zarządza. Wewnętrzny klasyfikator dzieli
+wchodzące pakiety pomiędzy sloty używając do tego celu adresu
+źródłowego lub docelowego. Sloty przetwarzane są karuzelowo
+(cyklicznie) co zapewnia mniej lub bardziej sprawiedliwą dystrybucję
+pakietów.
 
 %prep
 %setup -q -n sch_srr.v%{version}
