@@ -7,12 +7,12 @@
 Summary:	SSR packets scheduler (Simple Round Robin)
 Summary(pl.UTF-8):	Moduł szeregujący pakiety SRR (prosty algorytm karuzelowy)
 Name:		kernel%{_alt_kernel}-net-sch_srr
-Version:	0.4
+Version:	0.4.1
 Release:	%{_rel}@%{_kernel_ver_str}
 License:	GPL
 Group:		Base/Kernel
 Source0:	http://mordor.strace.net/sched-srr/sch_srr.v%{version}.tgz
-# Source0-md5:	943ed9d1a237336085331d43050d955c
+# Source0-md5:	7f78114e8eb1686cca0584bce15a5bc2
 URL:		http://mordor.strace.net/sched-srr/
 %{?with_dist_kernel:BuildRequires:	kernel%{_alt_kernel}-module-build >= 3:2.6.20.2}
 BuildRequires:	rpmbuild(macros) >= 1.379
